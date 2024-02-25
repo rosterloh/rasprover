@@ -1,0 +1,24 @@
+identifier: ros_driver/esp32/procpu
+name: ROS Driver for Robotics
+type: mcu
+arch: xtensa
+toolchain:
+  - zephyr
+supported:
+  - adc
+  - dac
+  - gpio
+  - i2c
+  - watchdog
+  - uart
+  - nvs
+  - pwm
+  - sdhc
+  - spi
+  - counter
+  - entropy
+testing:
+  ignore_tags:
+    - net
+    - bluetooth
+vendor: waveshare

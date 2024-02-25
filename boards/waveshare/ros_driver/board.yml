@@ -1,0 +1,5 @@
+board:
+    name: ros_driver
+    vendor: espressif
+    socs:
+    - name: esp32
