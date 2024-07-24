@@ -14,10 +14,11 @@
 			"device": "${config:bsp.soc}",
 			"targetId": "${config:bsp.board}",
 			"boardId": "1",
-			"toolchainPrefix": "arm-zephyr-eabi",
-			"armToolchainPath": "${env:GNUARMEMB_TOOLCHAIN_PATH}/bin",
+			"toolchainPrefix": "xtensa-espressif_esp32_zephyr-elf",
+			"armToolchainPath": "${env:HOME}/zephyr-sdk/xtensa-espressif_esp32_zephyr-elf/bin",
 			"svdFile": "${config:bsp.svd}",
 			"showDevDebugOutput": "raw",
+			"rtos": "Zephyr",
 			"configFiles": [
 				"${config:bsp.debug_config}"
 			]
@@ -33,10 +34,11 @@
 			"device": "${config:bsp.soc}",
 			"targetId": "${config:bsp.board}",
 			"boardId": "1",
-			"toolchainPrefix": "arm-zephyr-eabi",
-			"armToolchainPath": "${env:GNUARMEMB_TOOLCHAIN_PATH}/bin",
+			"toolchainPrefix": "xtensa-espressif_esp32_zephyr-elf",
+			"armToolchainPath": "${env:HOME}/zephyr-sdk/xtensa-espressif_esp32_zephyr-elf/bin",
 			"svdFile": "${config:bsp.svd}",
 			"showDevDebugOutput": "raw",
+			"rtos": "Zephyr",
 			"configFiles": [
 				"${config:bsp.debug_config}"
 			]

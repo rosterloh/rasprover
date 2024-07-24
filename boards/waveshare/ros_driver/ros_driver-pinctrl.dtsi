@@ -15,7 +15,7 @@
 		};
 	};
 
-    uart1_default: uart1_default {
+	uart1_default: uart1_default {
 		group1 {
 			pinmux = <UART1_TX_GPIO19>;
 			output-high;
@@ -48,7 +48,7 @@
 		};
 	};
 
-    ledc0_default: ledc0_default {
+	ledc0_default: ledc0_default {
 		group1 {
 			pinmux = <LEDC_CH0_GPIO4>,
 				 <LEDC_CH1_GPIO5>;

@@ -23,9 +23,14 @@ static int init(void)
 		return 0;
 	}
 
+	static lv_style_t level_style;
+	lv_style_init(&level_style);
+	lv_style_set_text_font(&level_style, &lv_font_montserrat_48);
+
 	line1_label = lv_label_create(lv_scr_act());
-	sprintf(line1_str, "%s: %s", CONFIG_BOARD, APP_VERSION_STRING);
-	lv_label_set_text(line1_label, line1_str);
+	// sprintf(line1_str, "%s: %s", CONFIG_BOARD, APP_VERSION_STRING);
+	// lv_label_set_text(line1_label, line1_str);
+	lv_label_set_text_fmt(line1_label, "%s: %s", CONFIG_BOARD, APP_VERSION_STRING);
 	lv_obj_align(line1_label, LV_ALIGN_CENTER, 0, 0);
 
 	lv_task_handler();

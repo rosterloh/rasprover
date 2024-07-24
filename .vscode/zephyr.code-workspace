@@ -23,11 +23,15 @@
 		{
 			"name": "BootloaderUnderDev",
 			"path": "../../bootloader/mcuboot/boot/zephyr"
+		},
+		{
+			"name": "esp",
+			"path": "../.."
 		}
 	],
 
 	"settings": {
-		"west": "${env:HOME}/.local/bin/west",
+		"west": "${env:HOME}/env/zephyr/bin/west",
 		"twister": {
 			"host_test_arch": "qemu_x86",
 		},
@@ -143,6 +147,13 @@
 			"**/.west/**": true
 		},
 		"editor.renderControlCharacters": false,
-		"cortex-debug.variableUseNaturalFormat": false
+		"cortex-debug.variableUseNaturalFormat": false,
+		"zephyr-workbench.board": "ros_driver",
+		"zephyr-workbench.build.pristine": "auto",
+		"zephyr-workbench.openocd.execPath": "${env:HOME}/zephyr-sdk/sysroots/x86_64-pokysdk-linux/usr/bin/openocd",
+		"zephyr-workbench.openocd.searchDir": "${env:HOME}/zephyr-sdk/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts",
+		"zephyr-workbench.pathToEnvScript": "${workspaceFolder:RepoRoot}/env.sh",
+		"zephyr-workbench.sdk": "${env:HOME}/zephyr-sdk",
+		"zephyr-workbench.westWorkspace": "${workspaceFolder:RepoRoot}/.."
 	}
 }
