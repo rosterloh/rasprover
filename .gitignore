@@ -1,15 +1,4 @@
-# editors
-# .vscode
-*.swp
-*~
-
-# python
-.venv
-
-# build
-**/build
-/twister-out*
-
+build*/
+.cache
+credentials.conf
 __pycache__/
-*.pdf
-.cache/

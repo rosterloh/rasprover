@@ -1,11 +1,13 @@
 manifest:
   remotes:
-    - name: zephyrproject-rtos
-      url-base: https://github.com/zephyrproject-rtos
+    - name: eclipse-zenoh
+      url-base: https://github.com/eclipse-zenoh
     - name: golioth
       url-base: https://github.com/golioth
-    - name: gardin
-      url-base: git@github.com:gardinltd
+    - name: rosterloh
+      url-base: https://github.com/rosterloh
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
 
   projects:
     - name: zephyr
@@ -17,19 +19,26 @@ manifest:
         name-allowlist:
           - cmsis
           - hal_espressif
-          - mbedtls
           - lvgl
+          - mbedtls
           - mcuboot
+          - zcbor
 
     - name: golioth
       repo-path: golioth-firmware-sdk
       remote: golioth
       path: modules/lib/golioth-firmware-sdk
-      revision: main
+      revision: v0.16.0
       submodules: true
 
-    - name: ros2
-      repo-path: libros2-zephyr
-      remote: gardin
+    - name: rosterloh-drivers
+      repo-path: zephyr-drivers
+      remote: rosterloh
       revision: main
-      path: modules/ros2
+      path: modules/lib/rosterloh-drivers
+
+    - name: zenoh
+      repo-path: zenoh-pico
+      remote: eclipse-zenoh
+      revision: 1.0.3
+      path: modules/lib/zenoh

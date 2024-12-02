@@ -1,7 +1,7 @@
 {
 	"folders": [
 		{
-			"name": "RepoRoot",
+			"name": "App",
 			"path": ".."
 		},
 		{
@@ -9,29 +9,17 @@
 			"path": "../../zephyr"
 		},
 		{
-			"name": "AppUnderDev",
-			"path": "../app"
-		},
-		{
-			"name": "ZephyrTests",
-			"path": "../tests"
-		},
-		{
-			"name": "ZephyrModules",
+			"name": "Modules",
 			"path": "../../modules"
 		},
 		{
-			"name": "BootloaderUnderDev",
+			"name": "Bootloader",
 			"path": "../../bootloader/mcuboot/boot/zephyr"
-		},
-		{
-			"name": "esp",
-			"path": "../.."
 		}
 	],
 
 	"settings": {
-		"west": "${env:HOME}/env/zephyr/bin/west",
+		"west": "${env:HOME}/envs/zephyr/bin/west",
 		"twister": {
 			"host_test_arch": "qemu_x86",
 		},
@@ -41,7 +29,7 @@
 			"soc": "esp32",
 			"board": "ros_driver",
 			"vendor": "waveshare",
-			"board_root": "${workspaceRoot}/boards",
+			"board_root": "${workspaceFolder:Modules}/lib/rosterloh-drivers/boards",
 			"board_path": "${config:bsp.board_root}/${config:bsp.vendor}/${config:bsp.board}",
 			"svd": "${workspaceFolder}/svd/${config:bsp.soc}.svd",
 			"debug_config": "${config:bsp.board_path}/support/openocd.cfg"
@@ -49,8 +37,8 @@
 
 		// App settings:
 		"app": {
-			"name": "${workspaceFolder:AppUnderDev}",
-			"build_dir": "${workspaceFolder:AppUnderDev}/build",
+			"name": "${workspaceFolder:App}",
+			"build_dir": "${workspaceFolder:App}/build",
 			"zephyr_config": "",  // -DOVERLAY_CONFIG=<path_relative_to_sample> use ; for multiple files
 			"zephyr_dtc_overlay": "",  // -DDTC_OVERLAY_FILE=<path_relative_to_sample> use ; for multiple files
 			"compile_args": ""
@@ -58,11 +46,15 @@
 
 		// Bootloader app settings:
 		"app_boot": {
-			"name": "${workspaceFolder:BootloaderUnderDev}",
-			"build_dir": "${workspaceFolder:BootloaderUnderDev}/build",
+			"name": "${workspaceFolder:Bootloader}",
+			"build_dir": "${workspaceFolder:Bootloader}/build",
 			"zephyr_config": "",  // -DOVERLAY_CONFIG=<path_relative_to_sample> use ; for multiple files
 			"zephyr_dtc_overlay": "",  // -DDTC_OVERLAY_FILE=<path_relative_to_sample> use ; for multiple files
 			"compile_args": ""
+		},
+
+		"[c]": {
+			"editor.formatOnSave": true
 		},
 
 		"cmake.configureOnOpen": false,
@@ -83,7 +75,7 @@
 		// will be detected based on the file contents. Set to false to keep
 		// the values you've explicitly set, above.
 		"editor.detectIndentation": false,
-		"editor.rulers": [80],
+		"editor.rulers": [100],
 
 		"editor.cursorBlinking": "smooth",
 
@@ -150,10 +142,9 @@
 		"cortex-debug.variableUseNaturalFormat": false,
 		"zephyr-workbench.board": "ros_driver",
 		"zephyr-workbench.build.pristine": "auto",
-		"zephyr-workbench.openocd.execPath": "${env:HOME}/zephyr-sdk/sysroots/x86_64-pokysdk-linux/usr/bin/openocd",
-		"zephyr-workbench.openocd.searchDir": "${env:HOME}/zephyr-sdk/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts",
-		"zephyr-workbench.pathToEnvScript": "${workspaceFolder:RepoRoot}/env.sh",
+		"zephyr-workbench.debug.openocd.pathExec": "${env:HOME}/zephyr-sdk/sysroots/x86_64-pokysdk-linux/usr/bin/openocd",
+		"zephyr-workbench.env.BOARD_ROOT": ["${workspaceFolder:Modules}/lib/rosterloh-drivers/boards"],
 		"zephyr-workbench.sdk": "${env:HOME}/zephyr-sdk",
-		"zephyr-workbench.westWorkspace": "${workspaceFolder:RepoRoot}/.."
+		"zephyr-workbench.westWorkspace": "${workspaceFolder:Zephyr}/.."
 	}
 }

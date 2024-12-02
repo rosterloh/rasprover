@@ -2,15 +2,45 @@ name: Build
 
 on:
   workflow_dispatch:
+    inputs:
+      BOARD:
+        required: true
+        type: string
+        default: ros_driver/esp32/procpu
+      ARTIFACT:
+        required: true
+        type: boolean
+        default: false
+      TAG:
+        type: string
+
+  workflow_call:
+    inputs:
+      BOARD:
+        required: true
+        type: string
+      ARTIFACT:
+        required: true
+        type: boolean
+      TAG:
+        type: string
 
 jobs:
   build:
-    runs-on: ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          path: rasprover
+          path: app
+
+      - name: Process Board name
+        id: nicename
+        shell: bash
+        run: |
+          BOARD_NICENAME=${{ inputs.BOARD }}
+          BOARD_NICENAME=${BOARD_NICENAME//\//_}
+          echo "BOARD_NICENAME=${BOARD_NICENAME}" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -20,17 +50,34 @@ jobs:
       - name: Setup Zephyr project
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
-          app-path: rasprover
-          toolchains: arm-zephyr-eabi
+          app-path: app
+          toolchains: xtensa-espressif_esp32_zephyr-elf
+
+      - name: Setup Blobs
+        shell: bash
+        run: |
+          west blobs fetch hal_espressif
 
       - name: Build firmware
-        working-directory: rasprover
         shell: bash
         run: |
-          west twister -T app -v --inline-logs --integration
+          west build -p -b ${{ inputs.BOARD }} --sysbuild app
 
-      - name: Twister Tests
-        working-directory: rasprover
+      - name: Prepare artifacts
         shell: bash
+        if: inputs.ARTIFACT == true && inputs.TAG != ''
         run: |
-          west twister -T tests -v --inline-logs --integration
+          cd build
+          mkdir -p artifacts
+          mv merged.hex                   ./artifacts/${{ github.event.repository.name }}_${{ inputs.TAG }}_${{ steps.nicename.outputs.BOARD_NICENAME }}_full.hex
+          mv app/zephyr/zephyr.signed.bin ./artifacts/${{ github.event.repository.name }}_${{ inputs.TAG }}_${{ steps.nicename.outputs.BOARD_NICENAME }}_update.bin
+          mv app/zephyr/zephyr.elf        ./artifacts/${{ github.event.repository.name }}_${{ inputs.TAG }}_${{ steps.nicename.outputs.BOARD_NICENAME }}.elf
+
+      # Run IDs are unique per repo but are reused on re-runs
+      - name: Save artifact
+        if: inputs.ARTIFACT == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: build_artifacts_${{ github.run_id }}_${{ steps.nicename.outputs.BOARD_NICENAME }}
+          path: |
+            build/artifacts/*
